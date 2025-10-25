@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/pages/homepage.dart';
+import 'package:flutter_quiz_app/pages/quizPage.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,7 +20,7 @@ class MainApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: Homepage(),
+      home: Quizpage(),
     );
   }
 }
