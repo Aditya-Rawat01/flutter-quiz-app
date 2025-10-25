@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/widgets/resultQuestionCards.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Quizpage extends StatefulWidget {
-  const Quizpage({super.key});
+  final Function(bool) isQuizHappening;
+  const Quizpage({super.key, required this.isQuizHappening});
 
   @override
   State<Quizpage> createState() => _QuizpageState();
@@ -73,13 +73,33 @@ class _QuizpageState extends State<Quizpage> {
         body: SingleChildScrollView(
           child: Container(
             width: double.infinity,
+
             padding: EdgeInsets.all(20),
             child: Column(
+
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Quiz Completed", style: TextStyle(fontSize: 25),),
+                SizedBox(
+                  width: double.infinity,
+
+                  child: Stack(
+                  
+                  children: [
+                    Center(child: Text("Quiz Completed", style: TextStyle(fontSize: 25),)),
+                    Positioned(
+                      right: 20,
+                      top: 1,
+                      child: ElevatedButton(onPressed:(){
+                        widget.isQuizHappening(false);
+                      }, child: Icon(Icons.home)),)
+                    
+                  ],
+                ),
+                )
+                ,
                 Text("Results:", style: TextStyle(fontSize: 20),),
-                Text("Total: ${correct}/${questions.length}"),
+                Text("Total: $correct/${questions.length}"),
+
                 ...questions.asMap().entries.map((val) {
                   int index = val.key;
                   Question questionObj = val.value;
@@ -123,6 +143,8 @@ class _QuizpageState extends State<Quizpage> {
                     child: ElevatedButton(onPressed: (){
                       answerSelection(option);
                     },  style: ElevatedButton.styleFrom(
+                      backgroundColor: selectedOptions[currentQuestionNumber]==option?Colors.purpleAccent:Colors.white,
+                      foregroundColor: selectedOptions[currentQuestionNumber]==option?Colors.white:Colors.purple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.all(
                           Radius.circular(5),

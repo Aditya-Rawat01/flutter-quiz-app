@@ -3,9 +3,23 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+class Homepage extends StatefulWidget {
+  final bool isQuiz;
+  final int numOfQuestions;
+  final Function(int) setQuestions;
+  final Function(bool) isQuizHappening;
+  const Homepage({super.key, required this.isQuiz, required this.isQuizHappening, required this.numOfQuestions, required this.setQuestions});
+  State<Homepage> createState() => _HomeState();
+}
 
+class _HomeState extends State<Homepage> {
+  var value = 1;
+
+  void setValue(int num) {
+    setState(() {
+      value = num;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,13 +76,18 @@ class Homepage extends StatelessWidget {
                   SizedBox(height: 100),
                   Text("Select no. of Questions:"),
                   ElevatedButton(
-                    onPressed: () {},
+
+                    onPressed: (){
+                      widget.setQuestions(5);
+                      setValue(1);
+                    },
                     child: Text("5"),
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(200, 40),
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
+                      backgroundColor: value==1?Colors.green:Colors.white,
+                      foregroundColor: value==1?Colors.white:Colors.purple,
                       shape: RoundedRectangleBorder(
+
                         borderRadius: BorderRadiusGeometry.all(
                           Radius.circular(10),
                         ),
@@ -76,37 +95,47 @@ class Homepage extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.setQuestions(10);
+                      setValue(2);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(200, 40),
+                      backgroundColor: value==2?Colors.deepOrange:Colors.white,
+                      foregroundColor: value==2?Colors.white:Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
                     child: Text("10"),
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(200, 40),
-                      backgroundColor: Colors.deepOrange,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: Text("20"),
+                    onPressed: () {
+                      widget.setQuestions(20);
+                      setValue(3);
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(200, 40),
-                      backgroundColor: Colors.deepPurple,
-                      foregroundColor: Colors.white,
+                      backgroundColor: value==3?Colors.deepPurple:Colors.white,
+                      foregroundColor: value==3?Colors.white:Colors.purple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.all(
                           Radius.circular(10),
                         ),
                       ),
                     ),
+                    child: Text("20"),
                   ),
                   SizedBox(
                     height: 40,
                   ),
-                  ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
+                  ElevatedButton(onPressed: (){
+                    widget.isQuizHappening(true);
+
+                  },style: ElevatedButton.styleFrom(
+                    
                       fixedSize: Size(150, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.all(
@@ -118,8 +147,8 @@ class Homepage extends StatelessWidget {
                     fit: StackFit.expand,
                     alignment: AlignmentDirectional.center,
                     children:[
-                      Positioned(child: Text("Start"),height: 20,width: 50, left: 30,),
-                      Positioned(child: Icon(Icons.arrow_right, size: 20),right: 15,),
+                      Positioned(height: 20,width: 50, left: 30,child: Text("Start"),),
+                      Positioned(right: 15,child: Icon(Icons.arrow_right, size: 20),),
                       ])
                     )
                 ],

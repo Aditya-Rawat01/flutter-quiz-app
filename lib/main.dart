@@ -6,9 +6,24 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+  State<MainApp> createState() => _startQuiz();
+}
 
+class _startQuiz extends State<MainApp> {
+  bool isQuiz = false;
+  int numOfQuestions = 5;
+  void isQuizHappening(bool value) {
+    setState(() {
+      isQuiz=value;
+    });
+  }
+  void setQuestions(int value) {
+    setState(() {
+      numOfQuestions = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +35,14 @@ class MainApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: Quizpage(),
+      home: isQuiz?Quizpage(
+        isQuizHappening:isQuizHappening
+      ):Homepage(
+        isQuiz:isQuiz,
+        isQuizHappening:isQuizHappening,
+        numOfQuestions:numOfQuestions,
+        setQuestions:setQuestions
+      ),
     );
   }
 }

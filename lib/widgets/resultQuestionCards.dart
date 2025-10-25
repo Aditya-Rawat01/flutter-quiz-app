@@ -22,7 +22,6 @@ class Resultquestioncards extends StatelessWidget {
             Text(question),
             ...options.asMap().entries.map((entry){
               var option = entry.value;
-              var index = entry.key;
               return 
               ElevatedButton(onPressed: (){}, style: ButtonStyle(
                 foregroundColor: WidgetStateProperty.all(ans==option?Colors.white:(option==selectedOption?Colors.white:Colors.purple)),
