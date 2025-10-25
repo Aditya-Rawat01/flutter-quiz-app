@@ -1,0 +1,7 @@
+[
+    {
+        "question" : "Which country has the highest life expectancy as of 2025?",
+        "options" : ["Monaco", "Sweden", "Finland", "Georgia"],
+        "answer":"Monaco"
+    }
+]

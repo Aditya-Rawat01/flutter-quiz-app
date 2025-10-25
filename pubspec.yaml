@@ -9,7 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fluttertoast: 
+  fluttertoast:
+  sqflite:
+  path:
+  sqflite_common_ffi_web:
 
 dev_dependencies:
   flutter_test:

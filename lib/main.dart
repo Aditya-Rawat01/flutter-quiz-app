@@ -1,8 +1,18 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
+import 'package:flutter_quiz_app/database_services/createDatabaseService.dart';
 import 'package:flutter_quiz_app/pages/homepage.dart';
 import 'package:flutter_quiz_app/pages/quizPage.dart';
-
-void main() {
+import 'package:sqflite_common/sqflite.dart';
+Future<void> initializeDatabaseConnection() async {
+  final DatabaseService db = DatabaseService.instance;
+  await db.database;
+  print("Database structure successfully created!");
+}
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDatabaseConnection();
   runApp(const MainApp());
 }
 
@@ -12,6 +22,8 @@ class MainApp extends StatefulWidget {
 }
 
 class _startQuiz extends State<MainApp> {
+  final DatabaseService db = DatabaseService.instance;
+  
   bool isQuiz = false;
   int numOfQuestions = 5;
   void isQuizHappening(bool value) {
