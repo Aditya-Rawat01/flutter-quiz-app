@@ -13,6 +13,8 @@ dependencies:
   sqflite:
   path:
   sqflite_common_ffi_web:
+  firebase_core: ^4.2.0
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393812680043",
+    "project_id": "quizzie-flutter",
+    "storage_bucket": "quizzie-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393812680043:android:710540d383df75b188c02e",
+        "android_client_info": {
+          "package_name": "com.example.flutter_quiz_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbRIhb2Ds1tz2UUsFEL45KQhlSeeCVhPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

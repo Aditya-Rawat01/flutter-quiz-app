@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz_app/functions/getQuizQuestions.dart';
 import 'package:flutter_quiz_app/widgets/resultQuestionCards.dart';
 
 class Quizpage extends StatefulWidget {
   final Function(bool) isQuizHappening;
-  const Quizpage({super.key, required this.isQuizHappening});
+  final int numOfQuestions;
+  const Quizpage({super.key, required this.isQuizHappening, required this.numOfQuestions});
 
   @override
   State<Quizpage> createState() => _QuizpageState();
@@ -20,18 +24,27 @@ class Question {
 }
 class _QuizpageState extends State<Quizpage> {
   int currentQuestionNumber = 0;
-  List<Question> questions = [
-    Question(question: "How many teeths does the great white baloon shark shrimplets with no teeth but big feets and large belly but no food but still carnivore, creates oxygen and consumes carbon dioxide, still doesnt breathe and live under the water but suffocates due to lack of oxygen under the water, has hands but cannot swim as it can suffocate under the water.", options: ["hello","no","i have a bf", "chopped"], ans: "chopped"),
-    Question(question: "How many teeths does the great white baloon shark shrimplets with no teeth but big feets and large belly but no food but still carnivore, creates oxygen and consumes carbon dioxide, still doesnt breathe and live under the water but suffocates due to lack of oxygen under the water, has hands but cannot swim as it can suffocate under the water.", options: ["hello","no","i have a bf", "chopped"], ans: "chopped"),
-    Question(question: "How many teeths does the great white baloon shark shrimplets with no teeth but big feets and large belly but no food but still carnivore, creates oxygen and consumes carbon dioxide, still doesnt breathe and live under the water but suffocates due to lack of oxygen under the water, has hands but cannot swim as it can suffocate under the water.", options: ["hello","no","i have a bf", "chopped"], ans: "chopped"),
-    Question(question: "How many teeths does the great white baloon shark shrimplets with no teeth but big feets and large belly but no food but still carnivore, creates oxygen and consumes carbon dioxide, still doesnt breathe and live under the water but suffocates due to lack of oxygen under the water, has hands but cannot swim as it can suffocate under the water.", options: ["hello","no","i have a bf", "chopped"], ans: "chopped"),
-    Question(question: "How many teeths does the great white baloon shark shrimplets with no teeth but big feets and large belly but no food but still carnivore, creates oxygen and consumes carbon dioxide, still doesnt breathe and live under the water but suffocates due to lack of oxygen under the water, has hands but cannot swim as it can suffocate under the water.", options: ["hello","no","i have a bf", "chopped"], ans: "chopped"),
-    ];
+  bool isLoading = true;
+  List<Question> questions=[];
   List <String?> selectedOptions =[];
+  void getData(int num)async{
+    List<Question> q = await getAllDocuments("quizQuestions");
+    List<Question> qToShow = [];
+    for (var i = 0; i < num; i++) {
+      q.shuffle();
+      qToShow = q.sublist(0, num);
+      Random();
+    }
+    setState(() {
+      questions = qToShow;
+      selectedOptions = List.filled(questions.length, null);
+      isLoading = false;
+    });
+  }
   @override
   void initState() {
     super.initState();
-    selectedOptions = List.filled(questions.length, null);
+    getData(widget.numOfQuestions);
   }
   void nextQuestion() {
     if (selectedOptions[currentQuestionNumber]==null) {
@@ -61,6 +74,21 @@ class _QuizpageState extends State<Quizpage> {
   }
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(), // Show a loading indicator
+        ),
+      );
+    }
+
+    if (questions.isEmpty) {
+      return const Scaffold(
+        body: Center(
+          child: Text("No quiz questions available."), // Handle empty state
+        ),
+      );
+    }
 
     if (currentQuestionNumber==questions.length) {
       var correct=0;
@@ -82,10 +110,13 @@ class _QuizpageState extends State<Quizpage> {
                 SizedBox(
                   width: double.infinity,
 
-                  child: Stack(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(0, 10,0,0),
+                    height: 60,
+                    child: Stack(
                   
                   children: [
-                    Center(child: Text("Quiz Completed", style: TextStyle(fontSize: 25),)),
+                    Center(child: Text("Quiz Completed", style: TextStyle(fontSize: 21),)),
                     Positioned(
                       right: 20,
                       top: 1,
@@ -95,10 +126,12 @@ class _QuizpageState extends State<Quizpage> {
                     
                   ],
                 ),
+                  )
+                  
                 )
                 ,
                 Text("Results:", style: TextStyle(fontSize: 20),),
-                Text("Total: $correct/${questions.length}"),
+                Text("Total: $correct/${questions.length}", style: TextStyle(fontSize: 20),),
 
                 ...questions.asMap().entries.map((val) {
                   int index = val.key;
@@ -123,9 +156,10 @@ class _QuizpageState extends State<Quizpage> {
           height: MediaQuery.of(context).size.height,
         color: Colors.cyan,
         width: double.infinity,
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.fromLTRB(20,0,20,0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("${currentQuestionNumber+1}/${questions.length}", style: TextStyle(fontSize: 30),),
             Text("Q${currentQuestionNumber+1}. ${currentQuestion.question}", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),),
@@ -133,7 +167,7 @@ class _QuizpageState extends State<Quizpage> {
             Container(
               width: double.infinity,
               child: Column(
-                spacing: 25,
+                spacing: 15,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ...currentQuestion.options.map((option){
@@ -156,7 +190,7 @@ class _QuizpageState extends State<Quizpage> {
                   ,
                   
                   SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

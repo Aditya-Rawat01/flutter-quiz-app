@@ -13,13 +13,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomeState extends State<Homepage> {
-  var value = 1;
-
-  void setValue(int num) {
-    setState(() {
-      value = num;
-    });
-  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +36,7 @@ class _HomeState extends State<Homepage> {
         backgroundColor: Colors.yellowAccent,
       ),
       body: Container(
-        padding: EdgeInsets.all(40),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/clouds.jpg"),
@@ -79,13 +73,12 @@ class _HomeState extends State<Homepage> {
 
                     onPressed: (){
                       widget.setQuestions(5);
-                      setValue(1);
                     },
                     child: Text("5"),
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(200, 40),
-                      backgroundColor: value==1?Colors.green:Colors.white,
-                      foregroundColor: value==1?Colors.white:Colors.purple,
+                      backgroundColor: widget.numOfQuestions==5?Colors.green:Colors.white,
+                      foregroundColor: widget.numOfQuestions==5?Colors.white:Colors.purple,
                       shape: RoundedRectangleBorder(
 
                         borderRadius: BorderRadiusGeometry.all(
@@ -97,12 +90,11 @@ class _HomeState extends State<Homepage> {
                   ElevatedButton(
                     onPressed: () {
                       widget.setQuestions(10);
-                      setValue(2);
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(200, 40),
-                      backgroundColor: value==2?Colors.deepOrange:Colors.white,
-                      foregroundColor: value==2?Colors.white:Colors.purple,
+                      backgroundColor: widget.numOfQuestions==10?Colors.deepOrange:Colors.white,
+                      foregroundColor: widget.numOfQuestions==10?Colors.white:Colors.purple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.all(
                           Radius.circular(10),
@@ -110,23 +102,6 @@ class _HomeState extends State<Homepage> {
                       ),
                     ),
                     child: Text("10"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      widget.setQuestions(20);
-                      setValue(3);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(200, 40),
-                      backgroundColor: value==3?Colors.deepPurple:Colors.white,
-                      foregroundColor: value==3?Colors.white:Colors.purple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                    child: Text("20"),
                   ),
                   SizedBox(
                     height: 40,
