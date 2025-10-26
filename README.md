@@ -3,8 +3,9 @@
 Created Basic quiz app for exploring flutter.
 
 - Screenshots:
-- ![alt text](assets/screenshots/first.jpg)
 
-- ![alt text](assets/screenshots/sec.jpg)
+- <img src="assets/screenshots/first.jpg" width="50%" alt="alt text">
 
-- ![alt text](assets/screenshots/third.jpg)
+- <img src="assets/screenshots/sec.jpg" width="50%" alt="alt text">
+
+- <img src="assets/screenshots/third.jpg" width="50%" alt="alt text">
